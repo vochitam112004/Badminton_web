@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Categories>
+@{
+    ViewData["title"] = "Categories Listed";
+}
+<h3>Category List</h3>
+<a class="btn btn-warning btn-light" asp-area="Admin"  asp-action="Create" asp-controller="Category">Add Category</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Category Name</th>
+            <th scope="col">Category Discription</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+        }
+        @foreach (var item in Model)
+        {
+
+            <tr class="ListProduct-Admin">
+                <th scope="row">@(++count)</th>
+                <td>@item.CategoryName</td>
+                <td>@item.Description</td>
+                <td>
+                    <a asp asp-action="Edit" class="btn btn-warning btn-sm" asp-controller="Category" asp-route-CategoryId="@item.CategoryId">Edit</a>
+                    <form asp-area="Admin" asp-controller="Category" asp-action="Delete" method="post" style="display:inline">
+                        <input type="hidden" name="CategoryId" value="@item.CategoryId" />
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

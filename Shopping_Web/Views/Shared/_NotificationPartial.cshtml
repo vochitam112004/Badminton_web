@@ -1,0 +1,18 @@
+﻿@if(TempData["success"] != null)
+{
+    <div class="alert alert-success Notification">
+        @TempData["success"]
+    </div>
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger Notification">
+        @TempData["error"]
+    </div>
+}
+@if (TempData["EditCategorySucess"] != null)
+{
+    <div class="alert alert-success Notification">
+        @TempData["EditCategorySucess"]
+    </div>
+}

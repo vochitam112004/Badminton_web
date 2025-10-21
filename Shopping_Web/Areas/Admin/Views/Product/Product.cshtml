@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["title"] = "Product Listed";
+}
+<h3>List Product</h3>
+<a class="btn btn-warning btn-light" asp-area="Admin" asp-action="Create" asp-controller="Product">Add product</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Price</th>
+            <th scope="col">Product image</th>
+            <th scope="col">Product Category</th>
+            <th scope="col">Product Brands</th>
+            <th scope="col">Product Quantity</th>
+            <th scope="col">Product Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+        }
+        @foreach(var item in Model)
+        {
+            
+            <tr class="ListProduct-Admin">
+                <th scope="row">@(++count)</th>
+                <td>@item.ProductName</td>
+                <td>@item.Price</td>
+                <td><img src="~/media/Products/@item.ImageUrl" /></td>
+                <td>@item.Category.CategoryName</td>
+                <td>@item.Brand.BrandName</td>
+                <td>@item.Quantity</td>
+                <td>@item.ProductCode</td>
+                <td>
+                    <a asp asp-action="Edit" class="btn btn-warning btn-sm" asp-controller="Product" asp-route-ProductId="@item.ProductId">Edit</a>
+                    <form asp-area="Admin" asp-controller="Product" asp-action="Delete" method="post" style="display:inline">
+                        <input type="hidden" name="ProductId" value="@item.ProductId" />
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
