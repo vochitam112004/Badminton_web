@@ -1,0 +1,51 @@
+﻿
+@model IEnumerable<OrderModel>
+@{
+    ViewData["title"] = "Order Listed";
+}
+<h3>Order List</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Order Code</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+        }
+        @foreach (var item in Model)
+        {
+
+            <tr class="Order-Admin">
+                <th scope="row">@(++count)</th>
+                <td>@item.UserName</td>
+                <td>@item.OrderDate</td>
+                <td>@item.OrderCode</td>
+                <td>
+                    @if(item.Status == 1)
+                    {
+                        <span class="text text success" >new order</span>
+                    }
+                    else
+                    {
+                        <span class="text text danger">order success</span>
+                    }
+                </td>
+                <td>
+                    <a asp asp-action="ViewOrder" class="btn btn-warning btn-sm" asp-controller="Order" asp-route-OrderCode="@item.OrderCode">View</a>
+                    <form asp-area="Admin" asp-controller="Order" asp-action="Delete" method="post" style="display:inline">
+                        <input type="hidden" name="OrderCode" value="@item.OrderCode" />
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

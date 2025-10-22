@@ -1,0 +1,44 @@
+﻿@model IEnumerable<OrderDetail>
+@{
+    ViewData["title"] = "View OrderDetails";
+}
+<h3>View Order Details</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Order Code</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Price</th>
+  
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+        }
+        @foreach (var item in Model)
+        {
+
+            <tr class="Order-Admin">
+                <th scope="row">@(++count)</th>
+                <td>@item.UserName</td>
+                <td>@item.OrderCode</td>
+                <td>@item.Quantity</td>
+                <td>@item.Product.ProductName</td>
+                <td>@item.Price</td>
+                <td>
+                    <a asp asp-action="View" class="btn btn-warning btn-sm" asp-controller="Order" asp-route-OrderCode="@item.OrderCode">View</a>
+                    <form asp-area="Admin" asp-controller="Order" asp-action="Delete" method="post" style="display:inline">
+                        <input type="hidden" name="OrderCode" value="@item.OrderCode" />
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
