@@ -1,0 +1,58 @@
+﻿@using Shopping_Web.Models.ViewModels
+@model EditUser
+@{
+    ViewData["title"] = "Edit User";
+}
+
+<h3>Edit User</h3>
+<div class="col-md-9">
+    <form asp-area="Admin" asp-controller="User" asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" required class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Ocupation"></label>
+            <input asp-for="Ocupation" class="form-control" />
+            <span asp-validation-for="Ocupation" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" required class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PhoneNumber">Phone Number</label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RoleId">Role</label>
+            <select asp-for="RoleId" class="form-control" asp-items="ViewBag.Roles">
+                <option value="">--choose a Role--</option>
+            </select>
+            <span asp-validation-for="RoleId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Update User</button>
+        </div>
+    </form>
+
+    <a asp-area="Admin" asp-controller="User" asp-action="User" class="btn btn-secondary mt-2">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
