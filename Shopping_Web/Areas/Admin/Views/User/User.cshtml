@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AppUser>
+﻿
 @{
     ViewData["title"] = "User List";
 }
@@ -18,21 +18,21 @@
         @{
             int count = 0;
         }
-        @foreach (var item in Model)
+        @foreach (var userWithRole in Model)
         {
 
             <tr class="Order-Admin">
                 <th scope="row">@(++count)</th>
-                <td>@item.UserName</td>
-                <td>@item.Email</td>
-                <td>@item.PhoneNumber</td>
-                <td></td>
+                <td>@userWithRole.UserName</td>
+                <td>@userWithRole.Email</td>
+                <td>@userWithRole.PhoneNumber</td>
+                <td>@userWithRole.RoleName</td>
                 <td>
-                    <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-warning btn-sm">
+                    <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-Id="@userWithRole.Id" class="btn btn-warning btn-sm">
                         Update
                     </a>
                     <form asp-area="Admin" asp-controller="User" asp-action="Delete" method="post" style="display:inline">
-                        <input type="hidden" name="Id" value="@item.Id" />
+                        <input type="hidden" name="Id" value="@userWithRole.Id" />
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
 

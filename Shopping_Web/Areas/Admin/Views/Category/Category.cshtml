@@ -1,6 +1,13 @@
 ﻿@model IEnumerable<Categories>
 @{
     ViewData["title"] = "Categories Listed";
+    Paginate page = new Paginate();
+    int pageNo = 0;
+    if(ViewBag.Page != null)
+    {
+        page = ViewBag.Page;
+        pageNo = page.CurrentPage;
+    }
 }
 <h3>Category List</h3>
 <a class="btn btn-warning btn-light" asp-area="Admin"  asp-action="Create" asp-controller="Category">Add Category</a>
@@ -35,3 +42,4 @@
         }
     </tbody>
 </table>
+<partial name="_Paging" model="page" />

@@ -15,10 +15,25 @@ namespace Shopping_Web.Areas.Admin.Controllers
         {
             _dataContext = dataContext;
         }
-        public async Task<IActionResult> Category() 
-        {
-            return View(await _dataContext.Categories.OrderByDescending(c => c.CategoryId).ToListAsync());
+        //public async Task<IActionResult> Category() 
+        //{
+        //    return View(await _dataContext.Categories.OrderByDescending(c => c.CategoryId).ToListAsync());
              
+        //}
+        public async Task<IActionResult> Category(int page = 1)
+        {
+            List<Categories> categories = await _dataContext.Categories.ToListAsync(); // lay data
+            const int pageSize = 10;
+            if(page < 1)
+            {
+                page = 1;
+            }
+            int totalItems = categories.Count(); // dem so luong item
+            var paginate = new Paginate(totalItems, page, pageSize);
+            int currentPage = (page - 1) * pageSize;
+            var data = categories.Skip(currentPage).Take(paginate.PageSize).ToList();
+            ViewBag.Page= paginate;
+            return View(data);
         }
         [HttpGet]
         public IActionResult Create()

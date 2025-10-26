@@ -25,8 +25,24 @@ namespace Shopping_Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> User()
         {
-            var users = await _dataContext.Users.OrderByDescending(u => u.Id).ToListAsync();
-            return View(users);
+            var usersWithRoles = await (from user in _dataContext.Users
+                                        join userRole in _dataContext.UserRoles on user.Id equals userRole.UserId into userRoles
+                                        from ur in userRoles.DefaultIfEmpty()
+                                        join role in _dataContext.Roles on ur.RoleId equals role.Id into roles
+                                        from r in roles.DefaultIfEmpty()
+                                        select new UserWithRoleViewModel
+                                        {
+                                            Id = user.Id,
+                                            UserName = user.UserName,
+                                            Email = user.Email,
+                                            PhoneNumber = user.PhoneNumber,
+                                            Ocupation = user.Ocupation,
+                                            RoleName = r != null ? r.Name : "No Role"
+                                        })
+                                        .OrderByDescending(u => u.Id)
+                                        .ToListAsync();
+
+            return View(usersWithRoles);
         }
         [HttpGet]
         [Route("Create")]

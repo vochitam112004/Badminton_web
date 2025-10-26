@@ -41,4 +41,13 @@ namespace Shopping_Web.Models.ViewModels
         [Required(ErrorMessage = "Please choose a Role")]
         public string RoleId { get; set; }
     }
+    public class UserWithRoleViewModel
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Ocupation { get; set; }
+        public string RoleName { get; set; }
+    }
 }

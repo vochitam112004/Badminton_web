@@ -7,7 +7,7 @@ using Shopping_Web.Repository;
 namespace Shopping_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Route("Admin/Brand")]
     public class BrandController : Controller
     {
         private readonly DataContext _dataContext;
