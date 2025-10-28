@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@model IEnumerable<IdentityRole>
+@{
+    ViewData["title"] = "Role List";
+}
+<h3>Role List</h3>
+<a class="btn btn-warning btn-light" asp-area="Admin" asp-action="Create" asp-controller="Role">Add Role</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Id</th>
+            <th scope="col">Role Name</th>
+            <th scope="col">Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+        }
+        @foreach (var item in Model)
+        {
+
+            <tr class="ListProduct-Admin">
+                <th scope="row">@(++count)</th>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>
+                    <a asp asp-action="Edit" asp-area="Admin" class="btn btn-warning btn-sm" asp-controller="Role" asp-route-Id="@item.Id">Edit</a>
+                    <form asp-area="Admin" asp-controller="Role" asp-action="Delete" method="post" style="display:inline">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
