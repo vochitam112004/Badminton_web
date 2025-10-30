@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shopping_Web.Repository;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Shopping_Web.Models;
+using Shopping_Web.Areas.Admin.Repository;
 namespace Shopping_Web
 {
     public class Program
@@ -10,6 +10,9 @@ namespace Shopping_Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.Configure<EmailSetting>(builder.Configuration.GetSection("EmailSetting"));
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             // EF Core DbContext
             builder.Services.AddDbContext<DataContext>(options =>

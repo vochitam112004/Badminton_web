@@ -7,7 +7,6 @@ using Shopping_Web.Repository;
 namespace Shopping_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
     public class RoleController : Controller
     {
         private readonly DataContext _dataContext;
