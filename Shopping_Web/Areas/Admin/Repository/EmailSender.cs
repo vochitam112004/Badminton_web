@@ -2,7 +2,6 @@
 using Shopping_Web.Models;
 using System.Net;
 using System.Net.Mail;
-using Microsoft.AspNetCore.Identity.UI.Services;
 namespace Shopping_Web.Areas.Admin.Repository
 {
     public class EmailSender : IEmailSender

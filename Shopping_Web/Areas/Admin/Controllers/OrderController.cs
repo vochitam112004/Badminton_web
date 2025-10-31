@@ -32,5 +32,28 @@ namespace Shopping_Web.Areas.Admin.Controllers
             }
             return View(oders);
         }
+        [HttpPost]
+        [Route("UpdateOrderStatus")]
+        public async Task<IActionResult> UpdateOrderStatus(string orderCode, int status)
+        {
+            var order = await _dataContext.Orders.FirstOrDefaultAsync(o => o.OrderCode == orderCode);
+            if (order == null)
+            {
+                return Json(new { success = false, message = "Order not found" });
+            }
+            order.Status = status;
+            try
+            {
+                _dataContext.Update(order);
+                await _dataContext.SaveChangesAsync();
+                return Json(new { success = true, message = "Order updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+
+            }
+
+        }
     }
 }

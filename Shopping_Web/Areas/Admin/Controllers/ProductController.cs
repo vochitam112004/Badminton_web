@@ -58,7 +58,7 @@ namespace Shopping_Web.Areas.Admin.Controllers
                
                 _dataContext.Add(product);
                 await _dataContext.SaveChangesAsync();
-                TempData["sucess"] = "Create Product Success";
+                TempData["success"] = "Create Product Success";
                 return RedirectToAction("Product");
             }
             else
@@ -139,7 +139,7 @@ namespace Shopping_Web.Areas.Admin.Controllers
             }
             _dataContext.Update(productExisted);
             await _dataContext.SaveChangesAsync();
-            TempData["EditProductSucess"] = "Update Product success";
+            TempData["success"] = "Update Product success";
             return RedirectToAction("Product");
         }
         [HttpPost]
@@ -157,7 +157,7 @@ namespace Shopping_Web.Areas.Admin.Controllers
             }
             _dataContext.Remove(product);
             await _dataContext.SaveChangesAsync();
-            TempData["sucess"] = "Product deleted successfully";
+            TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Product");
         }
     }

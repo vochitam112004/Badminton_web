@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<OrderDetail>
 @{
     ViewData["title"] = "View OrderDetails";
+    decimal subTotal = 0;
+    decimal toTal = 0;
 }
 <h3>View Order Details</h3>
 
@@ -22,9 +24,11 @@
         }
         @foreach (var item in Model)
         {
-
+            subTotal = item.Quantity * item.Price;
+            toTal += subTotal;
             <tr class="Order-Admin">
                 <th scope="row">@(++count)</th>
+                <input type="hidden" asp-for="@item.OrderCode" class="getId" />
                 <td>@item.UserName</td>
                 <td>@item.OrderCode</td>
                 <td>@item.Quantity</td>
@@ -40,5 +44,50 @@
                 </td>
             </tr>
         }
+        <tr>
+            <th colspan="5">Total: </th>
+            <td>@toTal.ToString("C")</td>
+            <td>
+                <select class="form-control selected-update-order">
+                    <option value="1">Order is success</option>
+                    <option value="0">Order is processing</option>
+                </select>
+            </td>
+        </tr>
     </tbody>
 </table>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.selected-update-order').change(function () {
+                var status = $(this).val();
+                var orderCode = $('.getId').val(); // lấy orderCode
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("UpdateOrderStatus", "Order", new { area = "Admin" })",
+                    data: { orderCode: orderCode, status: status },
+
+                    success: function (result) {
+                        if (result.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Update Status Success",
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire("Update Status Failed: " + result.message);
+                        }
+                    },
+
+                    error: function () {
+                        Swal.fire("Error occurred while updating status");
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -45,11 +45,11 @@ namespace Shopping_Web.Controllers
                     _dataContext.SaveChanges();
                 }
                 HttpContext.Session.Remove("Cart");
-                TempData["success"] = "CheckOut Cart thành công";
                 var email = "vochitam112004@gmail.com";
                 var subject = "Tâm Badminton";
                 var mesage = "Chúc mừng bạn đã đặt hành thành công , vui lòng chờ duyệt đơn hàng !";
                 await _emailSender.SendEmailAsync(email, subject, mesage);
+                TempData["success"] = "CheckOut Cart thành công ,vui lòng kiểm tra email";
                 return RedirectToAction("Cart", "Cart");
             }
         }
