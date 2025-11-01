@@ -14,21 +14,46 @@
 			<div class="col-sm-4"> 
 				<div class="product-image-wrapper">
 				<div class="single-products">
-					<a asp-action="ProductDetail" asp-controller="Product" asp-route-ProductId="@item.ProductId">
 						<div class="productinfo text-center">
-							<div class="image-container">
-								<img src="~/media/Products/@item.ImageUrl" alt="@item.ProductName" />
-							</div>
-							<h2>@item.Price</h2>
-							<p>@item.ProductName</p>
-							<p>Danh Mục :@item.Category.CategoryName</p>
-							<p>Thương Hiệu:@item.Brand.BrandName</p>
-								<a class="btn btn-default add-to-cart" asp-action="Add" asp-controller="Cart" asp-route-ProductId="@item.ProductId"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							<a asp-action="ProductDetail" asp-controller="Product" asp-route-ProductId="@item.ProductId">
+								<div class="image-container">
+									<img src="~/media/Products/@item.ImageUrl" alt="@item.ProductName" />
+								</div>
+								<h2>@item.Price</h2>
+								<p>@item.ProductName</p>
+								<p>Danh Mục :@item.Category.CategoryName</p>
+								<p>Thương Hiệu:@item.Brand.BrandName</p>
+									@* <a class="btn btn-default add-to-cart" asp-action="Add" asp-controller="Cart" asp-route-ProductId="@item.ProductId"><i class="fa fa-shopping-cart"></i>Add to cart</a> *@
+							</a>
+							<button class="btn btn-default add-to-cart" data-product_id="@item.ProductId"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
 						</div>
-					</a>
 				</div>
 			</div>
 		</div>
 		}
 	</div><!--features_items-->
 </div>
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+			$('.add-to-cart').click(function () {
+				var ProductId = $(this).data('product_id');
+				$.ajax({
+					url: '@Url.Action("Add", "Cart")',
+					type: 'POST',
+					data: { ProductId: ProductId },
+					success: function (response) {
+						if (response.success) {
+							Swal.fire("Add to cart success")
+						} else {
+                            Swal.fire("Failed to add product to cart.")
+                        }
+					},
+					error: function () {
+						alert('Error adding product to cart.');
+					}
+				});
+			});
+		});
+	</script>
+}

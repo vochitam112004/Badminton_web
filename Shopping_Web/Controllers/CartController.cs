@@ -21,6 +21,7 @@ namespace Shopping_Web.Controllers
             };
             return View(cartVM);
         }
+        [HttpPost]
         public async Task<IActionResult> Add(int ProductId)
         {
             Product product = await _context.Product.FindAsync(ProductId);
@@ -36,7 +37,7 @@ namespace Shopping_Web.Controllers
             }
             HttpContext.Session.SetJson("Cart", cart);
             TempData["success"] = "Add to cart successfully";
-            return Redirect(Request.Headers["Referer"].ToString());
+            return Json(new { success = true });
         }
         public async Task<IActionResult> Decrease(int ProductId)
         {
