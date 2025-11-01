@@ -49,8 +49,8 @@
             <td>@toTal.ToString("C")</td>
             <td>
                 <select class="form-control selected-update-order">
-                    <option value="1">Order is success</option>
-                    <option value="0">Order is processing</option>
+                    <option value="1">new Order</option>
+                    <option value="0">Order is success</option>
                 </select>
             </td>
         </tr>
@@ -61,7 +61,7 @@
         $(document).ready(function () {
             $('.selected-update-order').change(function () {
                 var status = $(this).val();
-                var orderCode = $('.getId').val(); // lấy orderCode
+                var orderCode = $('.getId').val();
 
                 $.ajax({
                     type: "POST",
@@ -82,7 +82,6 @@
                             Swal.fire("Update Status Failed: " + result.message);
                         }
                     },
-
                     error: function () {
                         Swal.fire("Error occurred while updating status");
                     }

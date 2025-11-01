@@ -16,4 +16,5 @@ namespace Shopping_Web.Models
         public decimal Price { get; set; }
         public Product Product { get; set; }
     }
+    
 }
