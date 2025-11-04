@@ -11,12 +11,13 @@
 }
 <h3>Category List</h3>
 <a class="btn btn-warning btn-light" asp-area="Admin"  asp-action="Create" asp-controller="Category">Add Category</a>
-<table class="table">
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th scope="col">No</th>
             <th scope="col">Category Name</th>
             <th scope="col">Category Discription</th>
+            <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -42,4 +43,4 @@
         }
     </tbody>
 </table>
-<partial name="_Paging" model="page" />
+@await Html.PartialAsync("_Paging", page, new ViewDataDictionary(ViewData) { { "Action", "Category" } })

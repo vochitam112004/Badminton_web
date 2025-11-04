@@ -19,9 +19,24 @@ namespace Shopping_Web.Areas.Admin.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
  
-        public async Task<IActionResult> Product()
+        public async Task<IActionResult> Product(int page =1)
         {
-            return View(await _dataContext.Product.OrderByDescending(p => p.ProductId).Include(p => p.Category).Include(p => p.Brand).ToListAsync());
+            List<Product> products = await _dataContext.Product
+                .Include(p =>p.Brand)
+                .Include(p => p.Category)
+                .OrderByDescending(p => p.ProductId)
+                .ToListAsync();
+            const int pageSize = 10;
+            if(page < 1)
+            {
+                page = 1;
+            }
+            int TotalItems = products.Count();
+            var paginate = new Paginate(TotalItems, page, pageSize);
+            int currentPage = (page - 1) * pageSize;
+            var data = products.Skip(currentPage).Take(paginate.PageSize).ToList();
+            ViewBag.Page = paginate;
+            return View(data);
         }
         [HttpGet]
         public IActionResult Create() {

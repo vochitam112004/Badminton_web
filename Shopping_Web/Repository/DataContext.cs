@@ -25,7 +25,8 @@ namespace Shopping_Web.Repository
         public DbSet<Product> Product { get; set; }
         public DbSet<Brands> Brand { get; set; }
         public DbSet<Categories> Categories { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
         public DbSet<OrderDetail> orderDetails { get; set; }
         public DbSet<OrderModel> Orders { get; set; }
-    }
+        }
 }

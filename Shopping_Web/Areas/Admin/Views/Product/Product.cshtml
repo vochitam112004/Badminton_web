@@ -1,10 +1,17 @@
 ﻿@model IEnumerable<Product>
 @{
     ViewData["title"] = "Product Listed";
+    Paginate page = new Paginate();
+    int pageNo = 0;
+    if (ViewBag.Page != null)
+    {
+        page = ViewBag.Page;
+        pageNo = page.CurrentPage;
+    }
 }
 <h3>List Product</h3>
 <a class="btn btn-warning btn-light" asp-area="Admin" asp-action="Create" asp-controller="Product">Add product</a>
-<table class="table">
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th scope="col">No</th>
@@ -15,6 +22,7 @@
             <th scope="col">Product Brands</th>
             <th scope="col">Product Quantity</th>
             <th scope="col">Product Code</th>
+            <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +35,7 @@
             <tr class="ListProduct-Admin">
                 <th scope="row">@(++count)</th>
                 <td>@item.ProductName</td>
-                <td>@item.Price</td>
+                <td>@item.Price.ToString("#,##0 VND")</td>
                 <td><img src="~/media/Products/@item.ImageUrl" /></td>
                 <td>@item.Category.CategoryName</td>
                 <td>@item.Brand.BrandName</td>
@@ -45,3 +53,4 @@
         }
     </tbody>
 </table>
+@await Html.PartialAsync("_Paging", page, new ViewDataDictionary(ViewData) { { "Action", "Product" } })

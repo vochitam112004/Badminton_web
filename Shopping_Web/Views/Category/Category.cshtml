@@ -16,7 +16,7 @@
 					<div class="single-products">
 						<div class="productinfo text-center">
 							<img src="~/media/Products/@item.ImageUrl" alt="@item.ProductName"/>
-							<h2>@item.Price</h2>
+							<h2>@item.Price.ToString("#,##0 VND")</h2>
 							<p>@item.ProductName</p>
 							<p>Danh Mục :@item.Category.CategoryName</p>
 							<p>Thương Hiệu:@item.Brand.BrandName</p>

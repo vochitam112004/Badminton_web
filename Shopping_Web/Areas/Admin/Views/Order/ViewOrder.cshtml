@@ -33,7 +33,7 @@
                 <td>@item.OrderCode</td>
                 <td>@item.Quantity</td>
                 <td>@item.Product.ProductName</td>
-                <td>@item.Price</td>
+                <td>@item.Price.ToString("#,##0 VND")</td>
                 <td>
                     <a asp asp-action="View" class="btn btn-warning btn-sm" asp-controller="Order" asp-route-OrderCode="@item.OrderCode">View</a>
                     <form asp-area="Admin" asp-controller="Order" asp-action="Delete" method="post" style="display:inline">

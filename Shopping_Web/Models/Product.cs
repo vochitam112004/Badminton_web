@@ -43,6 +43,7 @@ namespace Shopping_Web.Models
         public DateOnly CreateAt { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         public DateOnly? UpdateAt { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         public  Brands Brand { get; set; }
+        public Rating Ratings { get; set; }
         public Categories Category { get; set; }
     }
 }

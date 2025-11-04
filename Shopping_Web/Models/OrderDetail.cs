@@ -13,6 +13,7 @@ namespace Shopping_Web.Models
         public int ProductId { get; set; }
         public string OrderCode { get; set; }
         public int Quantity { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
         public Product Product { get; set; }
     }
