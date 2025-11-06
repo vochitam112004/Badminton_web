@@ -1,0 +1,47 @@
+﻿@model Slider
+@{
+    ViewData["title"] = "Edit Slider";
+}
+<h3>Edit Slider</h3>
+<div class="col-md-9">
+    <form asp-area="Admin" asp-controller="Slider" asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="SliderId" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label>Slider Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger" />
+        </div>
+
+        <div class="form-group">
+            <label>Slider Description</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label>Product Image</label>
+            <input asp-for="ImageFile" class="form-control" />
+            <span asp-validation-for="ImageFile" class="text-danger" />
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="~/media/Slider/@Model.ImageUrl" width="200" />
+            }
+        </div>
+        <div class="form-group">
+            <label> Slider status</label>
+            <select asp-for="Status" class="form-control">
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">Submit Edit Product</button>
+        </div>
+    </form>
+    <a asp-action="Slider">Back to Product List</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

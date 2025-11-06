@@ -20,12 +20,13 @@ namespace Shopping_Web.Areas.Admin.Controllers
         {
             return View(await _dataContext.Brand.OrderByDescending(b => b.BrandId).ToListAsync());
         }
-        [HttpGet]
+        [Route("Create")]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
+        [Route("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Brands brands)
         {
@@ -57,7 +58,7 @@ namespace Shopping_Web.Areas.Admin.Controllers
                 return BadRequest(errorMessgae);
             }
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult>Edit(int BrandId)
         {
             Brands brands = await _dataContext.Brand.FindAsync(BrandId);
@@ -90,6 +91,7 @@ namespace Shopping_Web.Areas.Admin.Controllers
             return RedirectToAction("Brand");
         }
         [HttpPost]
+        [Route("Delete")]
         public async Task<IActionResult> Delete(int BrandId)
         {
             var brands = await _dataContext.Brand.FindAsync(BrandId);

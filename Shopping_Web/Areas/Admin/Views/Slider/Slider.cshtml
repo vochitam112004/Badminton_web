@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Slider>
+@{
+    ViewData["title"] = "Slider Listed";
+}
+<h3>Slider List</h3>
+<a class="btn btn-warning btn-light" asp-area="Admin" asp-action="Create" asp-controller="Slider">Add Slider</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Slider Name</th>
+            <th scope="col">Slider Discription</th>
+            <th scope="col">Slider img </th>
+            <th scope="col">Status </th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+        }
+        @foreach (var item in Model)
+        {
+
+            <tr class="ListProduct-Admin">
+                <th scope="row">@(++count)</th>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td> <img src="~/media/Slider/@item.ImageUrl"/> </td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <span class="text text success">Banner Active</span>
+                    }
+                    else
+                    {
+                        <span class="text text danger">Banner Inactive</span>
+                    }
+                </td>
+                <td>
+                    <a asp asp-action="Edit" class="btn btn-warning btn-sm" asp-controller="Slider" asp-route-SliderId="@item.SliderId">Edit</a>
+                    <form asp-area="Admin" asp-controller="Slider" asp-action="Delete" method="post" style="display:inline">
+                        <input type="hidden" name="SliderId" value="@item.SliderId" />
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
