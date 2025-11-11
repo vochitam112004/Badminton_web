@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shopping_Web.Models;
 using Shopping_Web.Repository;
+using Shopping_Web.Models.ViewModels;
 namespace Shopping_Web.Controllers
 {
     public class HomeController : Controller
@@ -16,10 +17,15 @@ namespace Shopping_Web.Controllers
         }
         
 
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
             var products = _context.Product.Include("Category").Include("Brand").ToList();
-            return View(products);
+            var slider = _context.Sliders.Where( s => s.Status ==1).ToList();
+            return View (new HomeViewModel
+            {
+                Products = products,
+                Sliders = slider
+            });
         }
 
         public IActionResult Privacy()

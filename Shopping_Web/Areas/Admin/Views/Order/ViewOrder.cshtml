@@ -6,7 +6,7 @@
 }
 <h3>View Order Details</h3>
 
-<table class="table">
+<table class="table" id="order_details">
     <thead>
         <tr>
             <th scope="col">No</th>
@@ -15,6 +15,7 @@
             <th scope="col">Quantity</th>
             <th scope="col">Product Name</th>
             <th scope="col">Price</th>
+            <th scope="col">Action</th>
   
         </tr>
     </thead>
@@ -27,8 +28,10 @@
             subTotal = item.Quantity * item.Price;
             toTal += subTotal;
             <tr class="Order-Admin">
-                <th scope="row">@(++count)</th>
-                <input type="hidden" asp-for="@item.OrderCode" class="getId" />
+                <th class="col">
+                    @(++count)
+                    <input type="hidden" asp-for="@item.OrderCode" class="getId" />
+                </th>
                 <td>@item.UserName</td>
                 <td>@item.OrderCode</td>
                 <td>@item.Quantity</td>
@@ -39,24 +42,33 @@
                     <form asp-area="Admin" asp-controller="Order" asp-action="Delete" method="post" style="display:inline">
                         <input type="hidden" name="OrderCode" value="@item.OrderCode" />
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
-                    </form>
-
+                    </form> 
                 </td>
             </tr>
         }
-        <tr>
-            <th colspan="5">Total: </th>
-            <td>@toTal.ToString("C")</td>
-            <td>
-                <select class="form-control selected-update-order">
-                    <option value="1">new Order</option>
-                    <option value="0">Order is success</option>
-                </select>
-            </td>
-        </tr>
+        
     </tbody>
+    <tr>
+        <th colspan="5">Total: </th>
+        <td>@toTal.ToString("C")</td>
+        <td>
+            <select class="form-control selected-update-order">
+                <option value="1">new Order</option>
+                <option value="0">Order is success</option>
+            </select>
+        </td>
+    </tr>
 </table>
 @section Scripts {
+    <script>
+            new DataTable('#order_details', {
+            layout: {
+                topStart: {
+                    buttons: ['pdf','print']
+                }
+            }
+        });
+    </script>
     <script>
         $(document).ready(function () {
             $('.selected-update-order').change(function () {

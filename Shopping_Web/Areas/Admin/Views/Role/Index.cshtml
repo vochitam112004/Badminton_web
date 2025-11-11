@@ -6,13 +6,14 @@
 }
 <h3>Role List</h3>
 <a class="btn btn-warning btn-light" asp-area="Admin" asp-action="Create" asp-controller="Role">Add Role</a>
-<table class="table">
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th scope="col">No</th>
             <th scope="col">Id</th>
             <th scope="col">Role Name</th>
-            <th scope="col">Role</th>
+            <th scope="col">Action</th>
+           
         </tr>
     </thead>
     <tbody>
@@ -32,7 +33,6 @@
                         <input type="hidden" name="Id" value="@item.Id" />
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
-
                 </td>
             </tr>
         }

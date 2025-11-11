@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Product>
+﻿@model HomeViewModel
 <!--Phần bên trái của Trang bao gồm Caterory,Brands , Price...-->
+<partial name="_SliderPartial" model="Model.Sliders" />
 <div class="col-sm-3">
 	@Html.Partial("_SidebarPartial")
 </div>
@@ -9,7 +10,7 @@
 	<div class="features_items">
 		<h2 class="title text-center">Features Items</h2>
 		<!--phần hiển thị ra 1 sản phẩm chiếm 4 -->
-		@foreach (var item in Model)
+		@foreach (var item in Model.Products) 
 		{
 			<div class="col-sm-4"> 
 				<div class="product-image-wrapper">
