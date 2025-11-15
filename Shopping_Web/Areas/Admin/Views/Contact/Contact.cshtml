@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Contact>
+@{
+    ViewData["title"] = "Your Contact";
+}
+<h3>Your Contact</h3>
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col"> Name</th>
+            <th scope="col"> Email</th>
+            <th scope="col"> Map</th>
+            <th scope="col"> Phone</th>
+            <th scope="col">Description</th>
+            <th scope="col">Logo</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+        }
+        @foreach (var item in Model)
+        {
+
+            <tr class="ListProduct-Admin">
+                <th scope="row">@(++count)</th>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td>@item.Map</td>
+                <td>@item.Phone</td>
+                <td>@item.Description</td>
+                <td><img src="~/media/Logo/@item.LogoImage" /></td>
+                <td>
+                    <a asp-area="Admin" asp-action="Edit" class="btn btn-warning btn-sm" asp-controller="Contact" asp-route-ContactId="@item.ContactId">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

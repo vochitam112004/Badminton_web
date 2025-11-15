@@ -1,0 +1,57 @@
+﻿@model Contact
+@{
+    ViewData["title"] = "Edit Contact";
+}
+<h3>Edit Contact</h3>
+<div class="col-md-9">
+    <form asp-area="Admin" asp-controller="Contact" asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ContactId" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label>Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+
+        </div>
+        <div class="form-group">
+            <label>Phone</label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label> Description</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label> map</label>
+            <textarea asp-for="Map" class="form-control"></textarea>
+            <span asp-validation-for="Map" class="text-danger" />
+        </div>
+
+        
+        <div class="form-group">
+            <label>Logo Image</label>
+            <input asp-for="ImageUpload" class="form-control" />
+            <span asp-validation-for="ImageUpload" class="text-danger" />
+            @if (!string.IsNullOrEmpty(Model.LogoImage))
+            {
+                <img src="~/media/Logo/@Model.LogoImage" width="200" />
+            }
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">Submit Edit Product</button>
+        </div>
+    </form>
+    <a asp-action="Product">Back to Product List</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

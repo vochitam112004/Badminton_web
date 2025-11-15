@@ -92,6 +92,7 @@ package-lock.json
 *.db-wal
 
 # Secrets and configs
+appsettings.json
 appsettings.Development.json
 appsettings.Local.json
 appsettings.*.json

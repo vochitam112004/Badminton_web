@@ -29,5 +29,6 @@ namespace Shopping_Web.Repository
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<OrderDetail> orderDetails { get; set; }
         public DbSet<OrderModel> Orders { get; set; }
-        }
+        public DbSet<Contact> Contacts { get; set; }
+    }
 }
