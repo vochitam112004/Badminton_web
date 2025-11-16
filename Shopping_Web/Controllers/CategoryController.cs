@@ -11,7 +11,7 @@ namespace Shopping_Web.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Category(String CategoryName)
+        public async Task<IActionResult> Category(string CategoryName)
         {
             Categories categories = _context.Categories.Where(c => c.CategoryName == CategoryName).FirstOrDefault();
             if(categories == null)

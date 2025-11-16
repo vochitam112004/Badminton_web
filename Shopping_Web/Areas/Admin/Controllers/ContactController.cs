@@ -39,8 +39,8 @@ namespace Shopping_Web.Areas.Admin.Controllers
                 }
                 contactExisted.Name = contact.Name;
                 contactExisted.Email = contact.Email;
-                contactExisted.Map = contact.Map;
                 contactExisted.Phone = contact.Phone;
+                contactExisted.Map = contact.Map;
                 contactExisted.Description = contact.Description;
                 if(contact.ImageUpload != null)
                 {
@@ -62,6 +62,7 @@ namespace Shopping_Web.Areas.Admin.Controllers
                     contactExisted.LogoImage = fileName;
 
                 }
+                
                 await _context.SaveChangesAsync();
                 TempData["success"] = "Contact information updated successfully.";
                 return RedirectToAction("Contact", "Contact");

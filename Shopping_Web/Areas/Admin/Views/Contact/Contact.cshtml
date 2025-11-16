@@ -27,7 +27,9 @@
                 <th scope="row">@(++count)</th>
                 <td>@item.Name</td>
                 <td>@item.Email</td>
-                <td>@item.Map</td>
+                <td>
+                    @Html.Raw(item.Map)
+                </td>
                 <td>@item.Phone</td>
                 <td>@item.Description</td>
                 <td><img src="~/media/Logo/@item.LogoImage" /></td>

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Shopping_Web.Models;
 using Shopping_Web.Repository;
 using Shopping_Web.Models.ViewModels;
+using System.Threading.Tasks;
 namespace Shopping_Web.Controllers
 {
     public class HomeController : Controller
@@ -45,9 +46,9 @@ namespace Shopping_Web.Controllers
                 return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             }  
         }
-        public IActionResult Contact()
+        public async Task<IActionResult> Contact()
         {
-            return View();
+            return View(await _context.Contacts.FirstOrDefaultAsync());
         }
     }
 }
