@@ -9,7 +9,6 @@ namespace Shopping_Web.Controllers
     {
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
-
         public AccountController(UserManager<AppUser> userMgr, SignInManager<AppUser> signInMgr)
         {
             userManager = userMgr;
@@ -64,3 +63,4 @@ namespace Shopping_Web.Controllers
         }
     }
 }
+// test git 
