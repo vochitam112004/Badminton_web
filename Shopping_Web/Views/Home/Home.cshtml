@@ -29,6 +29,15 @@
 							<button class="btn btn-default add-to-cart" data-product_id="@item.ProductId"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
 						</div>
 				</div>
+					@if(User.Identity?.IsAuthenticated ?? false)
+					{
+						<div class="choose">
+							<ul class="nav  nav-pills nav-justified">
+								<li><button class="btn btn-danger addWishlist" data-product_id="@item.ProductId">WishList</button></li>
+								<li><button class="btn btn-warning addCompare" data-product_id="@item.ProductId">Compare</button></li>
+							</ul>
+						</div>
+					}
 			</div>
 		</div>
 		}
@@ -38,11 +47,11 @@
 	<script>
 		$(document).ready(function () {
 			$('.add-to-cart').click(function () {
-				var ProductId = $(this).data('product_id');
+				var productId = $(this).data('product_id');
 				$.ajax({
 					url: '@Url.Action("Add", "Cart")',
 					type: 'POST',
-					data: { ProductId: ProductId },
+					data: { ProductId: productId },
 					success: function (response) {
 						if (response.success) {
 							Swal.fire("Add to cart success")
@@ -54,6 +63,53 @@
 						alert('Error adding product to cart.');
 					}
 				});
+			});
+		});
+	</script>
+<!--đoạn ajax thêm product vào comapre-->
+	<script>
+		$(document).ready(function () {
+			$('.addWishlist').click(function () {
+				var productId = $(this).data("product_id");
+
+				$.ajax({
+					url: '@Url.Action("AddWishList", "Home")',
+					type: 'POST',
+					data: { ProductId: productId },
+					success: function (response) {
+						if (response.success) {
+							Swal.fire(response.message);
+						} else {
+							Swal.fire(response.message);
+						}
+					},
+					error: function () {
+						alert("Error adding product to wishlist");
+					}
+				});
+			});
+		});
+	</script>
+	<!--ajax compare-->
+	<script>
+		$(document).ready(function(){
+			$('.addCompare').click(function(){
+				var productId = $(this).data('product_id');
+				$.ajax({
+					url :'@Url.Action("AddComapre" ,"Home")',
+					type: 'POST',
+					data : {ProductId: productId},
+					success : function(response){
+						if(response.success){
+							Swal.fire(response.message)
+						}else{
+							Swal.fire(response.message)
+						}
+					},
+					error : function(){
+						alert("error compare product")
+					}
+				})
 			});
 		});
 	</script>
