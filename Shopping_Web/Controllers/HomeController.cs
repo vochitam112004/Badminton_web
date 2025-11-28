@@ -32,6 +32,16 @@ namespace Shopping_Web.Controllers
                 Sliders = slider
             });
         }
+        [HttpGet]
+        public async Task<IActionResult> WishList()
+        {
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Compare()
+        {
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> AddWishList(int ProductId)
         {
