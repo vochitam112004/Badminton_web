@@ -20,20 +20,15 @@
 
             <tr class="ListProduct-Admin">
                 <th scope="row">@(++count)</th>
-                <td></td>
-                <td>@item.Price.ToString("#,##0 VND")</td>
-                <td><img src="~/media/Products/@item.ImageUrl" /></td>
-                <td>@item.Category.CategoryName</td>
-                <td>@item.Brand.BrandName</td>
-                <td>@item.Quantity</td>
-                <td>@item.ProductCode</td>
+                <td>@wishlist.Product.ProductName</td>
+                <td>@wishlist.Product.Description</td>
+                <td>@wishlist.Product.Price.ToString("#,##0 VND")</td>
+                <td><img src="~/media/Products/@wishlist.Product.ImageUrl" /></td>
                 <td>
-                    <a asp asp-action="Edit" class="btn btn-warning btn-sm" asp-controller="Product" asp-route-ProductId="@item.ProductId">Edit</a>
-                    <form asp-area="Admin" asp-controller="Product" asp-action="Delete" method="post" style="display:inline">
-                        <input type="hidden" name="ProductId" value="@item.ProductId" />
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    <form asp-controller="Home" asp-action="DeleteWishList" method="post" style="display:inline">
+                        <input type="hidden" name="WishlistId" value="@wishlist.WishlistId" />
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Aret.you sure?')">Delete</button>
                     </form>
-
                 </td>
             </tr>
         }

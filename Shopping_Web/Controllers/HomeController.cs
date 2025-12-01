@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Shopping_Web.Models;
 using Shopping_Web.Repository;
 using Shopping_Web.Models.ViewModels;
-using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Identity;
 namespace Shopping_Web.Controllers
 {
@@ -35,12 +33,69 @@ namespace Shopping_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> WishList()
         {
-            return View();
+            var wishlist = await (from wishList in _context.Wishlists
+                                  join product in _context.Product on wishList.ProductId equals product.ProductId
+                                  join user  in _context.Users on wishList.UserId equals user.Id
+                                  select new
+                                  {
+                                      WishlistId = wishList.Id,
+                                      User = user,
+                                      Product = product,
+                                      Wishlists = wishList
+                                  }).ToListAsync();
+            return View(wishlist);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteWishList(int WishlistId)
+        {
+            if(WishlistId < 0)
+            {
+                return BadRequest("ID < 0");
+            }
+            var wishlist = await _context.Wishlists.FindAsync(WishlistId);
+            if(wishlist == null)
+            {
+                TempData["error"] = "Deleted Wishlist fail";
+                return RedirectToAction("WishList", "Home");
+            }
+            _context.Wishlists.Remove(wishlist);
+            await _context.SaveChangesAsync();
+            TempData["success"] = "Deleted Wishlist Successfully";
+            return RedirectToAction("WishList" , "Home");
+        }
+        [HttpPost]
+       
+        public async Task<IActionResult> DeleteCompare(int CompareId)
+        {
+            if (CompareId < 0)
+            {
+                return BadRequest("ID < 0");
+            }
+            var compare = await _context.Compares.FindAsync(CompareId);
+            if (compare == null)
+            {
+                TempData["error"] = "Deleted compare fail";
+                return RedirectToAction("Compare", "Home");
+            }
+            _context.Compares.Remove(compare);
+            await _context.SaveChangesAsync();
+            TempData["success"] = "Deleted compare Successfully";
+            return RedirectToAction("Compare", "Home");
         }
         [HttpGet]
         public async Task<IActionResult> Compare()
         {
-            return View();
+            var compare = await (from compares in _context.Compares
+                                 join product in _context.Product on compares.ProductId equals product.ProductId
+                                 join user in _context.Users on compares.UserId equals user.Id
+                                 select new
+                                 {
+                                     CompareId = compares.Id,
+                                     User = user,
+                                     Compare = compares,
+                                     Product = product
+                                 }).ToListAsync();
+            return View(compare);
         }
         [HttpPost]
         public async Task<IActionResult> AddWishList(int ProductId)
@@ -50,7 +105,7 @@ namespace Shopping_Web.Controllers
             {
                 return Unauthorized(new { success = false, message = "Bạn cần đăng nhập để thực hiện chức năng này" });
             }
-            // 1. Kiểm tra xem sản phẩm đã tồn tại trong Wishlist của User này chưa
+            //  Kiểm tra xem sản phẩm đã tồn tại trong Wishlist của User này chưa
             var existingItem = await _context.Wishlists 
                 .FirstOrDefaultAsync(w => w.ProductId == ProductId && w.UserId == user.Id);
 

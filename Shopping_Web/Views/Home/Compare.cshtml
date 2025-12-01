@@ -1,1 +1,36 @@
-﻿<h1>trang compare</h1>
+﻿
+<h3>WishList</h3>
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Description</th>
+            <th scope="col">Product Price</th>
+            <th scope="col">Product image</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+        }
+        @foreach (var compare in Model)
+        {
+
+            <tr class="ListProduct-Admin">
+                <th scope="row">@(++count)</th>
+                <td>@compare.Product.ProductName</td>
+                <td>@compare.Product.Description</td>
+                <td>@compare.Product.Price.ToString("#,##0 VND")</td>
+                <td><img src="~/media/Products/@compare.Product.ImageUrl" /></td>
+                <td>
+                    <form asp-controller="Home" asp-action="DeleteCompare" method="post" style="display:inline">
+                        <input type="hidden" name="CompareId" value="@compare.CompareId" />
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Aret.you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
