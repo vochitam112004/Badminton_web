@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Shopping_Web.Models;
 using Shopping_Web.Repository;
 
@@ -174,6 +175,32 @@ namespace Shopping_Web.Areas.Admin.Controllers
             await _dataContext.SaveChangesAsync();
             TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Product");
+        }
+        //Add Quantities Product
+       
+        [HttpGet]
+        public IActionResult AddQuantities(int ProductId)
+        {
+            ViewBag.ProductId = ProductId;
+            return View();
+        }
+        [Route("StoreProductQuantity")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> StoreProductQuantity(Quantity productQuantity)
+        {
+            var product = await _dataContext.Product.FindAsync (productQuantity.ProductId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.Quantity = product.Quantity + productQuantity.Quantities;
+            productQuantity.ProductId = product.ProductId;
+            productQuantity.CreatAt = DateTime.Now;
+            await _dataContext.Quantities.AddAsync (productQuantity);
+            await _dataContext.SaveChangesAsync();
+            TempData["success"] = $"Add Quanties for Product {product.ProductName} success";
+            return RedirectToAction("Product", "Product");
         }
     }
 }

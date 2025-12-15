@@ -23,6 +23,7 @@
             <th scope="col">Product Quantity</th>
             <th scope="col">Product Code</th>
             <th scope="col">Action</th>
+            <th scope="col">Add Quantites</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +36,8 @@
             <tr class="ListProduct-Admin">
                 <th scope="row">@(++count)</th>
                 <td>@item.ProductName</td>
+                
+
                 <td>@item.Price.ToString("#,##0 VND")</td>
                 <td><img src="~/media/Products/@item.ImageUrl" /></td>
                 <td>@item.Category.CategoryName</td>
@@ -47,8 +50,8 @@
                         <input type="hidden" name="ProductId" value="@item.ProductId" />
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
-
                 </td>
+                <td><a asp-action="AddQuantities"  asp-area="Admin" asp-controller="Product" asp-route-ProductId="@item.ProductId">Add Quantity</a></td>
             </tr>
         }
     </tbody>

@@ -27,6 +27,7 @@ namespace Shopping_Web.Models
 
         [Required(ErrorMessage = "Quantity is required")]
         public int Quantity { get; set; }
+        public int Sole { get; set; }
 
         [Required(ErrorMessage = "Size is required")]
         public string Size { get; set; } 

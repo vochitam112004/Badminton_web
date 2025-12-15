@@ -28,7 +28,8 @@
         </div>
         <div class="form-group">
             <label>Product Price</label>
-            <input asp-for="Price" class="form-control" />
+            <input asp-for="Price" pattern="[0-9.,]+" class="form-control typing-price" />
+            <span id="price-convert"></span>
             <span asp-validation-for="Price" class="text-danger" />
         </div>
         <div class="form-group">
@@ -65,4 +66,20 @@
 @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function(){
+            $(".typing-price").on("input",function(){
+                var currentPrice = $(this).val()
+
+                var price = parseFloat(currentPrice);
+                if(isNaN(price)){
+                    $("#price-convert").html("")
+                    return;
+                }
+                $("#price-convert").html(
+                    new Intl.NumberFormat('vn-VN' ,{style: 'currency' , currency: "VND"}).format(price)
+                );
+            });
+        });
+    </script>
 }

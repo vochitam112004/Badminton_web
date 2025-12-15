@@ -32,5 +32,6 @@ namespace Shopping_Web.Repository
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Compare> Compares { get; set; }
+        public DbSet<Quantity> Quantities { get; set; }
     }
 }
