@@ -4,6 +4,7 @@ using Shopping_Web.Models;
 using Shopping_Web.Repository;
 using System.Security.Claims;
 using Shopping_Web.Areas.Admin.Repository;
+using Microsoft.EntityFrameworkCore;
 namespace Shopping_Web.Controllers
 {
     public class CheckOutController : Controller
@@ -41,12 +42,16 @@ namespace Shopping_Web.Controllers
                     orderDetails.Quantity = cart.Quantity;
                     orderDetails.OrderCode = orderCode;
                     orderDetails.ProductId = cart.ProductId;
+                    var product = await _dataContext.Product.Where(p => p.ProductId == cart.ProductId).FirstAsync();
+                    product.Quantity = product.Quantity - cart.Quantity;
+                    product.Sole = product.Sole + cart.Quantity;
+                    _dataContext.Update(product);
                     _dataContext.Add(orderDetails);
                     _dataContext.SaveChanges();
                 }
                 HttpContext.Session.Remove("Cart");
-                var email = "vochitam112004@gmail.com";
-                var subject = "Tâm Badminton";
+                var email = userEmail;
+                var subject = "Tâm Store Badminton";
                 var mesage = "Chúc mừng bạn đã đặt hành thành công , vui lòng chờ duyệt đơn hàng !";
                 await _emailSender.SendEmailAsync(email, subject, mesage);
                 TempData["success"] = "CheckOut Cart thành công ,vui lòng kiểm tra email";

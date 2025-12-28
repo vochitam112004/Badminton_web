@@ -47,7 +47,6 @@
 						<i class="fa fa-angle-right"></i>
 					</a>
 				</div>
-
 			</div>
 			<!--/product-information-->
 			<div class="col-sm-7">
@@ -60,10 +59,20 @@
 						<label>Quantity: @Model.ProductDetails.Quantity</label>
 						
 						<input type="text" value="3" />
-						<button type="button" class="btn btn-fefault cart">
-							<i class="fa fa-shopping-cart"></i>
-							Add to cart
-						</button>
+						@if (Model.ProductDetails.Quantity > 0)
+						{
+							<button type="button" class="btn btn-fefault cart">
+								<i class="fa fa-shopping-cart"></i>
+								Add to cart
+							</button>
+						}
+						else
+						{
+							<button type="button" class="btn btn-fefault cart">
+								<i class="fa fa-shopping-cart"></i>
+								Sale Off
+							</button>
+						}
 					</span>
 					<p><b>Availability:</b> In Stock</p>
 					<p><b>Condition:</b> New</p>
@@ -91,38 +100,6 @@
 						@Model.ProductDetails.Description
 					</div>
 				</div>
-
-				<div class="tab-pane fade" id="companyprofile">
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/gallery4.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="tab-pane fade" id="tag">
-					
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/gallery4.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
 				<div class="tab-pane fade active in" id="reviews">
 					<div class="col-sm-12">
 						<ul>

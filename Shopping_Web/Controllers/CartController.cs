@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shopping_Web.Models;
 using Shopping_Web.Models.CartItemView;
 using Shopping_Web.Repository;
@@ -65,15 +66,19 @@ namespace Shopping_Web.Controllers
         }
         public async Task<IActionResult> Increase(int ProductId)
         {
+            Product product = await _context.Product.Where(p => p.ProductId == ProductId).FirstAsync();
             List<CartItem> carts = HttpContext.Session.GetJson<List<CartItem>>("Cart");
             CartItem cartItem = carts.Where(c => c.ProductId == ProductId).FirstOrDefault();
-            if (cartItem.Quantity >= 1)
+            if (cartItem.Quantity >= 1 && product.Quantity > cartItem.Quantity)
             {
                 ++cartItem.Quantity;
+              
             }
             else
             {
-                carts.RemoveAll(p => p.ProductId == ProductId);
+                cartItem.Quantity = product.Quantity;
+                TempData["success"] = "Quantities Product is maximum";
+                //carts.RemoveAll(p => p.ProductId == ProductId);
             }
             if (carts.Count == 0)
             {

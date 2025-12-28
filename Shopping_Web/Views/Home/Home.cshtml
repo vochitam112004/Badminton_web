@@ -10,37 +10,46 @@
 	<div class="features_items">
 		<h2 class="title text-center">Features Items</h2>
 		<!--phần hiển thị ra 1 sản phẩm chiếm 4 -->
-		@foreach (var item in Model.Products) 
-		{
-			<div class="col-sm-4"> 
-				<div class="product-image-wrapper">
-				<div class="single-products">
-						<div class="productinfo text-center">
-							<a asp-action="ProductDetail" asp-controller="Product" asp-route-ProductId="@item.ProductId">
-								<div class="image-container">
-									<img src="~/media/Products/@item.ImageUrl" alt="@item.ProductName" />
-								</div>
-								<h2>@item.Price.ToString("#,##0 VND")</h2>
-								<p>@item.ProductName</p>
-								<p>Danh Mục :@item.Category.CategoryName</p>
-								<p>Thương Hiệu:@item.Brand.BrandName</p>
-									@* <a class="btn btn-default add-to-cart" asp-action="Add" asp-controller="Cart" asp-route-ProductId="@item.ProductId"><i class="fa fa-shopping-cart"></i>Add to cart</a> *@
-							</a>
-							<button class="btn btn-default add-to-cart" data-product_id="@item.ProductId"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
-						</div>
+		<div class="row" style="display:flex ; flex-wrap : wrap;">
+			@foreach (var item in Model.Products) 
+			{
+				<div class="col-sm-4"> 
+					<div class="product-image-wrapper">
+					<div class="single-products">
+							<div class="productinfo text-center">
+								<a asp-action="ProductDetail" asp-controller="Product" asp-route-ProductId="@item.ProductId">
+									<div class="image-container">
+										<img src="~/media/Products/@item.ImageUrl" alt="@item.ProductName" />
+									</div>
+									<h2>@item.Price.ToString("#,##0 VND")</h2>
+									<p>@item.ProductName</p>
+									<p>Danh Mục :@item.Category.CategoryName</p>
+									<p>Thương Hiệu:@item.Brand.BrandName</p>
+										@* <a class="btn btn-default add-to-cart" asp-action="Add" asp-controller="Cart" asp-route-ProductId="@item.ProductId"><i class="fa fa-shopping-cart"></i>Add to cart</a> *@
+								</a>
+								@if (item.Quantity > 0)
+								{
+									<button class="btn btn-default add-to-cart" data-product_id="@item.ProductId"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
+								}
+								else
+								{
+									<button class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Sale Off</button>
+								}
+							</div>
+					</div>
+						@if(User.Identity?.IsAuthenticated ?? false)
+						{
+							<div class="choose">
+								<ul class="nav  nav-pills nav-justified">
+									<li><button class="btn btn-danger addWishlist" data-product_id="@item.ProductId">WishList</button></li>
+									<li><button class="btn btn-warning addCompare" data-product_id="@item.ProductId">Compare</button></li>
+								</ul>
+							</div>
+						}
 				</div>
-					@if(User.Identity?.IsAuthenticated ?? false)
-					{
-						<div class="choose">
-							<ul class="nav  nav-pills nav-justified">
-								<li><button class="btn btn-danger addWishlist" data-product_id="@item.ProductId">WishList</button></li>
-								<li><button class="btn btn-warning addCompare" data-product_id="@item.ProductId">Compare</button></li>
-							</ul>
-						</div>
-					}
 			</div>
+			}
 		</div>
-		}
 	</div><!--features_items-->
 </div>
 @section Scripts {

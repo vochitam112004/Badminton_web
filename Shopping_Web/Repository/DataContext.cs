@@ -33,5 +33,6 @@ namespace Shopping_Web.Repository
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Compare> Compares { get; set; }
         public DbSet<Quantity> Quantities { get; set; }
+        public DbSet<Shipping> Shippings { get; set; }
     }
 }
