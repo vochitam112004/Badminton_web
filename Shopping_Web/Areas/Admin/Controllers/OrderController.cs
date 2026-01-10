@@ -26,12 +26,13 @@ namespace Shopping_Web.Areas.Admin.Controllers
                 return RedirectToAction("Order");
             }
             var oders = await _dataContext.orderDetails.Where(o => o.OrderCode == OrderCode)
-                .Include(od => od.Product)
-                .ToListAsync();
-            if(oders == null)
+                .Include(od => od.Product).ToListAsync();
+            if (oders == null)
             {
                 return RedirectToAction("Order");
             }
+            var ShippinPrice = await _dataContext.Orders.Where(o => o.OrderCode == OrderCode).Select(o => o.ShippingCost).FirstOrDefaultAsync();
+            ViewBag.ShippingPrice = ShippinPrice;
             return View(oders);
         }
         [HttpPost]

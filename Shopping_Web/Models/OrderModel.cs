@@ -10,6 +10,8 @@ namespace Shopping_Web.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
         public string OrderCode { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal ShippingCost { get; set; }
         public string UserName { get; set; }
         public DateTime OrderDate { get; set; }
         public int Status { get; set; }

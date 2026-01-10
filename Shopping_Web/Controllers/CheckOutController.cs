@@ -5,6 +5,7 @@ using Shopping_Web.Repository;
 using System.Security.Claims;
 using Shopping_Web.Areas.Admin.Repository;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 namespace Shopping_Web.Controllers
 {
     public class CheckOutController : Controller
@@ -30,6 +31,14 @@ namespace Shopping_Web.Controllers
                 orderItem.OrderCode = orderCode;
                 orderItem.UserName = userEmail;
                 orderItem.OrderDate = DateTime.Now;
+                var shippingPriceCookies = Request.Cookies["ShippingCookie"];
+                decimal shippingPrice = 0;
+                if (shippingPriceCookies != null)
+                {
+                    var shippingPriceJson = shippingPriceCookies;
+                    shippingPrice = JsonConvert.DeserializeObject<decimal>(shippingPriceJson);
+                }
+                orderItem.ShippingCost = shippingPrice;
                 orderItem.Status = 1;
                 _dataContext.Add(orderItem);
                 await _dataContext.SaveChangesAsync();
@@ -41,6 +50,7 @@ namespace Shopping_Web.Controllers
                     orderDetails.Price = cart.Price;
                     orderDetails.Quantity = cart.Quantity;
                     orderDetails.OrderCode = orderCode;
+                   
                     orderDetails.ProductId = cart.ProductId;
                     var product = await _dataContext.Product.Where(p => p.ProductId == cart.ProductId).FirstAsync();
                     product.Quantity = product.Quantity - cart.Quantity;

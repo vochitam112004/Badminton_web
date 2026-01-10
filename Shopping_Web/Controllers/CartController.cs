@@ -28,7 +28,8 @@ namespace Shopping_Web.Controllers
             CartItemViews cartVM = new()
             {
                 CartItems = cartItems,
-                GrandToTal = cartItems.Sum(item => item.Quantity * item.Price)
+                GrandToTal = cartItems.Sum(item => item.Quantity * item.Price),
+                ShippingPrice = shippingPrice
             };
             return View(cartVM);
         }
@@ -152,6 +153,12 @@ namespace Shopping_Web.Controllers
                 Console.WriteLine($"Error adding shipping price cookie: {ex.Message}" );
             }
             return Json(new { ShippingPrice });
+        }
+        [HttpGet]
+        public IActionResult DeleteShipping()
+        {
+            Response.Cookies.Delete("ShippingCookie");
+            return RedirectToAction("Cart", "Cart");
         }
     }
 }

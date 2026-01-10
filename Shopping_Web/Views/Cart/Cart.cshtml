@@ -44,7 +44,7 @@
 										<a class="btn btn-danger btn-sm" asp-controller="Cart" asp-action="Remove" asp-route-ProductId="@item.ProductId"> Remove </a>
 								</td>
 								<td class="cart_total">
-									<p class="cart_total_price">@Model.CartItems.Where(i => i.ProductId == @item.ProductId).Sum(i => i.Quantity*i.Price).ToString()</p>
+									<p class="cart_total_price">@Model.CartItems.Where(i => i.ProductId == @item.ProductId).Sum(i => i.Quantity*i.Price).ToString("#,##0 VND")</p>
 								</td>
 								<td class="cart_delete">
 									<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
@@ -77,11 +77,28 @@
 							</tr>
 						}
 						<tr rowspan="6">
-							<td colspan="6">Grand Total :<p class="cart_total_price">@Model.GrandToTal.ToString()</p></td>
+							<td colspan="6">
+								Grand Total :<p class="cart_total_price">@Model.GrandToTal.ToString("#,##0 VND")</p>
+								ShippingPrice :<p class="cart_total_price">@Model.ShippingPrice.ToString("#,##0 VND")</p>
+								<p><a asp-action="DeleteShipping"  asp-controller="Cart">DeleteShip</a></p>
+							</td>
+							
 							<td> <a class="btn btn-danger btn-sm" asp-controller="Cart" asp-action="Clear"> Clear </a></td>
 							@if(User.Identity ?. IsAuthenticated ?? false)
 							{
-								<td> <a class="btn btn-primary btn-sm" asp-controller="CheckOut" asp-action="CheckOut"> Checkout </a></td>
+								<td> 
+									@if(@Model.ShippingPrice <= 0)
+									{
+										<button type="button" disabled class="btn btn-primary btn-sm" asp-controller="CheckOut" asp-action="CheckOut"> Checkout</button><br />
+										<div>
+											<span class="text text-danger ">Yêu cầu tính giá vận chuyển trước khi đặt hàng</span>
+										</div>
+									}
+									else
+									{
+										<a class="btn btn-primary btn-sm" asp-controller="CheckOut" asp-action="CheckOut"> Checkout </a>
+									}
+								</td>
 							}
 						</tr>		
 					}
@@ -116,7 +133,7 @@
 
 					success : function(result){
 						if(result){
-							// location.reload();
+							location.reload();
 						}
 					}
 				})
